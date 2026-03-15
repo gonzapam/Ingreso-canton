@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso | El Cantón - Islas</title>
+    <style>
+        /* Diseño pensado para celulares */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus {
+            border-color: #3498db;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>El Cantón - Islas</h1>
+        <p>Ingresá el número de lote de tu destino</p>
+        
+        <input type="number" id="loteInput" placeholder="Ej: 354" inputmode="numeric">
+        
+        <button onclick="buscarLote()">Abrir en Maps</button>
+        
+        <div class="error" id="errorMsg">Lote no encontrado. Verificá el número.</div>
+    </div>
+
+    <script>
+        // Acá se configura el "diccionario" de lotes y sus links
+        const baseDeDatosLotes = {
+            "354": "https://maps.app.goo.gl/nkTX63Sxeyqy2pGg8",
+            "308": "https://maps.app.goo.gl/Q3DRwkTLUXvmfMZA8"
+            // Para agregar más, seguí el formato: "NUMERO": "LINK",
+            // "309": "http://link.com/309",
+            // "310": "http://link.com/310"
+        };
+
+        function buscarLote() {
+            // Obtenemos el valor que escribió el invitado
+            const numeroIngresado = document.getElementById('loteInput').value.trim();
+            const mensajeError = document.getElementById('errorMsg');
+
+            // Verificamos si el número existe en nuestra base de datos
+            if (baseDeDatosLotes[numeroIngresado]) {
+                // Si existe, ocultamos el error (por si estaba visible) y redirigimos
+                mensajeError.style.display = 'none';
+                window.location.href = baseDeDatosLotes[numeroIngresado];
+            } else {
+                // Si no existe o está vacío, mostramos el mensaje de error
+                mensajeError.style.display = 'block';
+            }
+        }
+
+        // Agregamos la funcionalidad para que también busque al apretar "Enter" en el teclado
+        document.getElementById('loteInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                buscarLote();
+            }
+        });
+    </script>
+
+</body>
+</html>
+
